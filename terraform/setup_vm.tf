@@ -23,7 +23,7 @@ data "azurerm_subnet" "existing_subnet" {
   resource_group_name  = data.azurerm_resource_group.existing_rg.name
 }
 
-resource "azurerm_dev_test_lab_vm" "example_vm" {
+resource "azurerm_linux_virtual_machine" "example_vm" {
   name                = "terra-cloud-application-vm"
   resource_group_name = data.azurerm_resource_group.existing_rg.name
   lab_name            = data.azurerm_dev_test_lab.existing_lab.name
