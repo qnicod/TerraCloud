@@ -7,7 +7,15 @@ resource "azurerm_network_interface" "example_nic" {
     name                          = "internal"
     subnet_id                     = data.azurerm_subnet.existing_subnet.id
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.example_public_ip.id
   }
+}
+
+resource "azurerm_public_ip" "example_public_ip" {
+  name                = "terra-cloud-public-ip"
+  location            = data.azurerm_resource_group.existing_rg.location
+  resource_group_name = data.azurerm_resource_group.existing_rg.name
+  allocation_method   = "Dynamic"
 }
 
 resource "azurerm_linux_virtual_machine" "example_vm" {
@@ -34,5 +42,6 @@ resource "azurerm_linux_virtual_machine" "example_vm" {
 }
 
 output "public_ip" {
-  value = azurerm_network_interface.example_nic.private_ip_address
+  value = azurerm_public_ip.example_public_ip.ip_address
 }
+
