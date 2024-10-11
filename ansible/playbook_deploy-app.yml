@@ -1,6 +1,6 @@
 ---
 - name: Playbook pour créer un fichier hello
-  hosts: app
+  hosts: all
   become: true
   tasks:
     - name: Créer un fichier hello dans /home/maintainer
