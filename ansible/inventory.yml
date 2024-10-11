@@ -2,7 +2,7 @@ all:
   children:
     app:
       hosts:
-        ansible_host: terra-cloud-application-vm.westeurope.cloudapp.azure.com
+        app: terra-cloud-application-vm.westeurope.cloudapp.azure.com
         ansible_user: maintainer
         ansible_sudo_pass: !vault |
                   $ANSIBLE_VAULT;1.1;AES256
