@@ -1,4 +1,4 @@
-resource "azurerm_dev_test_lab_virtual_machine" "example_vm" {
+resource "azurerm_dev_test_linux_virtual_machine" "example_vm" {
   name                = "terra-cloud-application-vm"
   resource_group_name = data.azurerm_resource_group.existing_rg.name
   lab_name            = data.azurerm_dev_test_lab.existing_lab.name
