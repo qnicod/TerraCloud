@@ -1,0 +1,12 @@
+---
+- name: Playbook pour créer un fichier hello
+  hosts: all
+  become: true
+  tasks:
+    - name: Créer un fichier hello dans /home/maintainer
+      copy:
+        content: "Hello, world!\n"
+        dest: /home/maintainer/hello
+        owner: maintainer
+        group: maintainer
+        mode: '0644'
