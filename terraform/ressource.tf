@@ -6,8 +6,8 @@ resource "azurerm_dev_test_linux_virtual_machine" "example" {
   size                   = "Standard_A4_v2"
   username               = "maintainer"
   password               = "Password1234!"
-  lab_virtual_network_id = azurerm_dev_test_virtual_network.existing_vnet.id
-  lab_subnet_name        = azurerm_dev_test_virtual_network.existing_vnet.subnet[0].name
+  lab_virtual_network_id = data.azurerm_dev_test_virtual_network.existing_vnet.id
+  lab_subnet_name        = data.azurerm_dev_test_virtual_network.existing_vnet.subnet[0].name
   storage_type           = "Premium"
   notes                  = "Application VM for the Terraform Cloud example."
 
