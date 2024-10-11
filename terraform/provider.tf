@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=4.0.0"
+    }
+  }
+}
+
 provider "azurerm" {
   features {}
 }
@@ -15,4 +24,9 @@ data "azurerm_dev_test_virtual_network" "existing_vnet" {
   name                = "t-clo-901-rns-1"
   lab_name            = data.azurerm_dev_test_lab.existing_lab.name
   resource_group_name = data.azurerm_resource_group.existing_rg.name
+
+  subnet {
+    use_public_ip_address           = "Allow"
+    use_in_virtual_machine_creation = "Allow"
+  }
 }
