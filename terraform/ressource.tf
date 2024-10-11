@@ -1,37 +1,31 @@
-resource "azurerm_dev_test_linux_virtual_machine" "example_vm" {
-  name                = "terra-cloud-application-vm"
-  resource_group_name = data.azurerm_resource_group.existing_rg.name
-  lab_name            = data.azurerm_dev_test_lab.existing_lab.name
-  location            = data.azurerm_resource_group.existing_rg.location
+resource "azurerm_dev_test_virtual_network" "existing_vnet" {
+  name                = "example-network"
+  lab_name            = azurerm_dev_test_lab.example.name
+  resource_group_name = azurerm_resource_group.example.name
 
-  size                = "Standard_A4_v2"
-  admin_username      = "maintener"
-  admin_password      = "Password1234!"
+  subnet {
+    use_public_ip_address           = "Allow"
+    use_in_virtual_machine_creation = "Allow"
+  }
+}
 
-  source_image_reference {
+resource "azurerm_dev_test_linux_virtual_machine" "example" {
+  name                   = "terra-cloud-application-vm-example"
+  resource_group_name    = data.azurerm_resource_group.existing_rg.name
+  lab_name               = data.azurerm_dev_test_lab.existing_lab.name
+  location               = data.azurerm_resource_group.existing_rg.location
+  size                   = "Standard_A4_v2"
+  username               = "maintainer"
+  password               = "Password1234!"
+  lab_virtual_network_id = azurerm_dev_test_virtual_network.existing_vnet.id
+  lab_subnet_name        = azurerm_dev_test_virtual_network.existing_vnet.subnet[0].name
+  storage_type           = "Premium"
+  notes                  = "Application VM for the Terraform Cloud example."
+
+  gallery_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "22.04-LTS"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts"
     version   = "latest"
   }
-
-  network_interface_ids = [azurerm_network_interface.example_nic.id]
-
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
 }
-
-resource "azurerm_network_interface" "example_nic" {
-  name                = "terra-cloud-nic"
-  location            = data.azurerm_resource_group.existing_rg.location
-  resource_group_name = data.azurerm_resource_group.existing_rg.name
-
-  ip_configuration {
-    name                          = "terra-cloud-ip-config"
-    subnet_id                    = data.azurerm_subnet.existing_subnet.id
-    private_ip_address_allocation = "Dynamic"
-  }
-}
-
