@@ -1,0 +1,26 @@
+version: v1.0
+name: Start Azure VM with Bash
+
+parameters:
+  resource_group:
+    type: string
+    description: "The Azure Resource Group where the VM is located"
+  vm_name:
+    type: string
+    description: "The name of the Azure VM to start"
+
+blocks:
+  - name: Start Azure VM with Bash
+    task:
+      prologue:
+        commands:
+          # Install Azure CLI
+          - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+          # Login using Service Principal
+          - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+      jobs:
+        - name: Start VM
+          commands:
+            # Start the VM
+            - az vm start --resource-group t-clo-901-rns-1 --name terra-cloud-application-vm
+
