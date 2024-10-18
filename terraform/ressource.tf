@@ -5,7 +5,7 @@ resource "azurerm_dev_test_linux_virtual_machine" "example" {
   location               = data.azurerm_resource_group.existing_rg.location
   size                   = "Standard_A4_v2"
   username               = "maintainer"
-  password               = "Password1234!"
+  password               = ${TF_PASSWORD_VM}
   lab_virtual_network_id = data.azurerm_dev_test_virtual_network.existing_vnet.id
   lab_subnet_name        = data.azurerm_dev_test_virtual_network.existing_vnet.allowed_subnets[0].lab_subnet_name
   storage_type           = "Standard"
