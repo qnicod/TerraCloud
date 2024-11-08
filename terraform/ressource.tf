@@ -8,7 +8,7 @@ resource "azurerm_dev_test_linux_virtual_machine" "example" {
   lab_subnet_name                 = data.azurerm_dev_test_virtual_network.existing_vnet.allowed_subnets[0].lab_subnet_name
   storage_type                    = "Standard"
   username                        = "maintainer"
-  ssh_key                         = file("~/.ssh/id_rsa.pub")
+  ssh_key                         = file("/home/semaphore/.ssh/id_rsa.pub")
   notes                  	      = "Application VM for the Terraform Cloud example."
 
 
