@@ -1,5 +1,4 @@
-variable "PASSWORD_APP_VM" {
-  description = "Application Virtual Machine Password"
+variable "SSH_PUB_KEY" {
+  description = "SSH Public Key from Application VM"
   type        = string
 }
-
