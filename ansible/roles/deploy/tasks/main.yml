@@ -1,0 +1,13 @@
+# roles/deploy/tasks/main.yml
+---
+- name: Clone the repository
+  git:
+    repo: 'https://gitlab.infra.connectwork.fr/epitech/sample-app.git'
+    dest: /home/maintainer/sample-app
+    version: master
+
+- name: Build the Docker image
+  command: docker build -t sample-app /home/maintainer/sample-app
+
+- name: Run the Docker container
+  command: docker run -d --name sample-app-container -p 80:80 sample-app
