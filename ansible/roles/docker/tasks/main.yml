@@ -7,19 +7,14 @@
     state: directory
     mode: '0755'
 
-- name: Download Docker's GPG key to keyring
-  ansible.builtin.get_url:
+- name: Add Docker GPG apt Key
+  apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
-    dest: /usr/share/keyrings/docker-archive-keyring.gpg
-    mode: '0644'
+    state: present
 
-- name: Add Docker repository for Ubuntu
-  vars:
-    arch: "{{ ansible_architecture | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}"
-    codename: "{{ ansible_lsb.codename }}"
-  ansible.builtin.apt_repository:
-    repo: "deb [arch={{ arch }} signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ codename }} stable"
-    filename: docker
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
     state: present
 
 - name: Update apt cache after adding Docker repository
