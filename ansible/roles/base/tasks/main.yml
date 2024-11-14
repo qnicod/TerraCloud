@@ -1,0 +1,11 @@
+# roles/base/tasks/main.yml
+---
+- name: Install required packages
+  ansible.builtin.apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - software-properties-common
+      - git
