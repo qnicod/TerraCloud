@@ -1,5 +1,5 @@
 ---
-- name: Playbook pour créer un fichier hello
+- name: Playbook pour déployer l'application
   hosts: all
   become: true
   tasks:
@@ -8,9 +8,31 @@
         name: git
         state: present
 
+    - name: Installer Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Démarrer le service Docker
+      service:
+        name: docker
+        state: started
+        enabled: true
+
     - name: Cloner le dépôt de l'application
       git:
         repo: 'https://gitlab.infra.connectwork.fr/epitech/sample-app.git'
         dest: /home/maintainer/sample-app
-        version: main
+        version: master
 
+    - name: Construire l'image Docker
+      command: docker build -t sample-app /home/maintainer/sample-app
+
+    - name: Exécuter le conteneur Docker
+      command: docker run -d --name sample-app-container -p 80:80 sample-app
+
+    - name: Exécuter les migrations de la base de données
+      command: docker exec sample-app-container php artisan migrate
+
+    - name: Seed du jeu de données
+      command: docker exec sample-app-container php artisan db:seed
