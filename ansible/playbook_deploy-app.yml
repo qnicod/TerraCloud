@@ -3,10 +3,14 @@
   hosts: all
   become: true
   tasks:
-    - name: Créer un fichier hello dans /home/maintainer
-      copy:
-        content: "Hello, world!\n"
-        dest: /home/maintainer/hello
-        owner: maintainer
-        group: maintainer
-        mode: '0644'
+    - name: Installer Git
+      apt:
+        name: git
+        state: present
+
+    - name: Cloner le dépôt de l'application
+      git:
+        repo: 'https://gitlab.infra.connectwork.fr/epitech/sample-app.git'
+        dest: /home/maintainer/sample-app
+        version: main
+
