@@ -1,0 +1,7 @@
+# tasks/post_config/main.yml
+---
+- name: Execute artisan migrate
+  command: docker exec sample-app-container php artisan migrate
+
+- name: Seed the database
+  command: docker exec sample-app-container php artisan db:seed
