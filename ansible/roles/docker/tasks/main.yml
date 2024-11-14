@@ -1,24 +1,24 @@
-# roles/docker/tasks/main.yml
 ---
+# roles/docker/tasks/main.yml
 
-- name: Create directory for Docker's GPG key
+- name: Create directory for Docker's keyring
   ansible.builtin.file:
-    path: /etc/apt/keyrings
+    path: /usr/share/keyrings
     state: directory
     mode: '0755'
 
-- name: Add Docker's official GPG key
-  ansible.builtin.apt_key:
+- name: Download Docker's GPG key to keyring
+  ansible.builtin.get_url:
     url: https://download.docker.com/linux/debian/gpg
-    keyring: /etc/apt/keyrings/docker.asc
-    state: present
+    dest: /usr/share/keyrings/docker-archive-keyring.gpg
+    mode: '0644'
 
 - name: Add Docker repository
   vars:
     arch: "{{ ansible_architecture | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}"
     codename: "{{ ansible_lsb.codename }}"
   ansible.builtin.apt_repository:
-    repo: "deb [arch={{ arch }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ codename }} stable"
+    repo: "deb [arch={{ arch }} signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian {{ codename }} stable"
     filename: docker
     state: present
 
