@@ -1,4 +1,4 @@
-# roles/deploy/tasks/main.yml
+# ansible/roles/deploy/tasks/main.yml
 ---
 - name: Clone the repository
   git:
@@ -6,8 +6,15 @@
     dest: /home/maintainer/sample-app
     version: master
 
-- name: Build the Docker image
-  command: docker build -t sample-app /home/maintainer/sample-app
+- name: Copy docker-compose.prod.yml to the server
+  copy:
+    src: roles/deploy/files/docker-compose.prod.yml
+    dest: /home/maintainer/sample-app/docker-compose.prod.yml
 
-- name: Run the Docker container
-  command: docker run -d --name sample-app-container -p 80:80 sample-app
+- name: Copy nginx.conf to the server
+  copy:
+    src: roles/deploy/files/nginx.conf
+    dest: /home/maintainer/sample-app/nginx.conf
+
+- name: Build and run the Docker containers
+  command: docker-compose -f /home/maintainer/sample-app/docker-compose.prod.yml up -d --build
