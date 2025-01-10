@@ -6,3 +6,4 @@
     - base
     - docker
     - deploy
+    - post_config
