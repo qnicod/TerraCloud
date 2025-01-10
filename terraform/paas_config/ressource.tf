@@ -17,10 +17,6 @@ resource "azurerm_linux_web_app" "app" {
   resource_group_name = data.azurerm_resource_group.existing_rg.name
   service_plan_id     = azurerm_app_service_plan.asp.id
 
-  site_config {
-    linux_fx_version = "PHP|8.2"
-  }
-
   app_settings = {
     "APP_ENV"       = var.APP_ENV
     "APP_KEY"       = var.APP_KEY
