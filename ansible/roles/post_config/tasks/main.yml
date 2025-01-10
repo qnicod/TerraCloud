@@ -1,7 +1,7 @@
-# tasks/post_config/main.yml
+# ansible/roles/post_config/tasks/main.yml
 ---
 - name: Execute artisan migrate
-  command: docker exec sample-app-container php artisan migrate
+  command: docker exec sample-app-container php artisan migrate --force
 
 - name: Seed the database
-  command: docker exec sample-app-container php artisan db:seed
+  command: docker exec sample-app-container php artisan db:seed --force
