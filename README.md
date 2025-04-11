@@ -18,6 +18,7 @@ Sure! Here's the updated README in English:
 - A **VM** with **Semaphore UI** installed.
 - **Semaphore UI** (includes **Terraform** and **Ansible**).
 - Two ressources groups was created by default for this project.
+
 ![**t-clo-901-rns-1**](https://prod-files-secure.s3.us-west-2.amazonaws.com/34c726d1-2ac9-404e-b072-3ae3d901d767/7493913d-cf57-448c-8098-eb0475b4c188/Screenshot_2024-11-22_at_10.24.48.png)
 **t-clo-901-rns-1**
 
