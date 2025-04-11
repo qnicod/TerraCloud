@@ -1,7 +1,3 @@
-Sure! Here's the updated README in English:
-
----
-
 # TerraCloud
 
 ## Description
